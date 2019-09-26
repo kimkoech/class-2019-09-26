@@ -1,0 +1,46 @@
+---
+title: "report"
+author: "Billy Koech"
+date: "9/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(gapminder)
+library(gganimate)
+```
+
+
+
+```{r}
+# viewing the data
+
+glimpse(gapminder)
+gapminder %>% sample_n(5)
+
+# find belgium in 1962
+
+belgium_1962 <- gapminder %>% filter(country == "Belgium", year == "1962")
+
+
+
+ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
+
+gapminder %>% filter(year == 1962) %>% ggplot(aes(x = gdpPercap, y = lifeExp)) + geom_point()
+
+
+three_continets <- gapminder %>% filter(continent == "Americas" | continent == "Africa" | continent == "Asia" )
+
+
+```
+
+## Creating Animations
+
+```{r}
+
+ggplot(three_continets, aes(x =gdpPercap, y = lifeExp, color = pop)) + geom_point() + facet_wrap(~continent) + scale_x_log10() + transition_states(year, transition_length = 1, state_length = 0.1)
+
+```
+
